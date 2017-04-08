@@ -5,6 +5,6 @@ const BoardPage = () => {
   return (
     <List />
   )
-}
+} 
 
 export default BoardPage

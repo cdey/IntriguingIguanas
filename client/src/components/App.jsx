@@ -1,12 +1,12 @@
 import React from 'react'
 import { Router, Route, hashHistory } from 'react-router'
 import { connect } from 'react-redux'
-import BoardList from './BoardList.jsx'
-import Home from './Home.jsx'
-import Board from './Board.jsx'
-import SignUp from './SignUp.jsx'
-import LogIn from './LogIn.jsx'
-import UserProfile from './UserProfile.jsx'
+import BoardListPage from './BoardListPage.jsx'
+import HomePage from './HomePage.jsx'
+import BoardPage from './BoardPage.jsx'
+import SignUpPage from './SignUpPage.jsx'
+import LogInPage from './LogInPage.jsx'
+import UserProfilePage from './UserProfilePage.jsx'
 
 class App extends React.Component {
 	constructor(props) {
@@ -17,12 +17,12 @@ class App extends React.Component {
 	  return (
       <div>
         <Router history={ hashHistory }>
-          <Route path="/" component={ Home }/>
-          <Route path="/lobby" component={ BoardList }/>
-          <Route path="/lobby/:taskBoardId" component={ Board }/>
-          <Route path="/signup" component={ SignUp }/>
-          <Route path="/login" component={ LogIn }/>
-          <Route path="/lobby/user/:id" component= { UserProfile }/> 
+          <Route path="/" component={ HomePage }/>
+          <Route path="/lobby" component={ BoardListPage }/>
+          <Route path="/lobby/:taskBoardId" component={ BoardPage }/>
+          <Route path="/signup" component={ SignUpPage }/>
+          <Route path="/login" component={ LogInPage }/>
+          <Route path="/lobby/user/:id" component= { UserProfilePage }/> 
         </Router>
       </div>
     )

@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 
 const appReducer = combineReducers({
 	//reducer files go here! - import the reducers!
+  
 })
 
 const rootReducer = (state, action) => {

@@ -1,6 +1,7 @@
-const { addList } = require('../database/db-queries/list.js')
+// const { addList } = require('../database/db-queries/list.js')
 const { fetchBoard } = require('../database/db-queries/board.js')
-const { fetchLists } = require('../database/db-queries/list.js') 
+const { addList, fetchLists } = require('../database/db-queries/list.js') 
+const { createTask, fetchTasks } = require('../database/db-queries/task.js')
 
 var sockets = require('socket.io');
 var io;
@@ -47,6 +48,25 @@ module.exports = {
           })
           .catch(err => {
             console.log('Error creating list', err)
+          })
+        });
+
+// <------------- CREATE TASK ------------->
+        socket.on('create-task', function(data) {
+          console.log(data, "TASK");
+          createTask(data.text, data.listId)
+          .then(msg => {
+            fetchTasks(data.listId)
+            .then(tasks => {
+              socket.emit('update-list', tasks)
+              socket.to(room).emit('update-list', tasks)
+            })
+            .catch(err => {
+              console.log('Retrieving tasks error')
+            })
+          })
+          .catch(err => {
+            console.log('Error creating tasks', err)
           })
         });
 

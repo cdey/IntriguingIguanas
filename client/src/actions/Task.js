@@ -20,3 +20,24 @@ export const createTask = (text, list_id) => {
     list_id
   }
 }
+
+// ------------ FETCH ------------
+export const fetchingTasks = () => {
+  return {
+    type: 'FETCHING_TASKS'
+  }
+}
+
+export const tasksFetched = (tasks) => {
+  return {
+    type: 'TASKS_FETCHED',
+    tasks: tasks
+  }
+}
+
+export const fetchTasksError = (fetchError) => {
+  return {
+    type: 'FETCH_TASKS_ERROR',
+    fetchError
+  }
+}

@@ -1,7 +1,7 @@
 // const { addList } = require('../database/db-queries/list.js')
 const { fetchBoard } = require('../database/db-queries/board.js')
 const { addList, fetchLists } = require('../database/db-queries/list.js') 
-const { createTask, fetchTasks } = require('../database/db-queries/task.js')
+const { addTask, fetchTasks } = require('../database/db-queries/task.js')
 
 var sockets = require('socket.io');
 var io;
@@ -53,11 +53,11 @@ module.exports = {
 
 // <------------- CREATE TASK ------------->
         socket.on('create-task', function(data) {
-          console.log(data, "TASK");
-          createTask(data.text, data.listId)
+          addTask(data.listId, data.text)
           .then(msg => {
             fetchTasks(data.listId)
             .then(tasks => {
+              console.log(tasks, "TASKS")
               socket.emit('update-list', tasks)
               socket.to(room).emit('update-list', tasks)
             })

@@ -8,14 +8,26 @@ export class List extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      text: ''
+      text: '',
+      tasks: []
     }
     this.onInputChange = this.onInputChange.bind(this)
     this.onCreateTask = this.onCreateTask.bind(this)
 
-    this.props.socket.on('update-list', (res) => {
-      this.props.tasksFetched(res.rows)
+    this.props.socket.on('update-list', () => {
+      this.props.socket.emit('fetch-tasks', { list_id: this.props.list_id })
     })
+
+    this.props.socket.on('tasks-fetched', (tasks) => {
+      console.log('---> TASKS', tasks)
+      this.setState({
+        tasks: tasks
+      })
+    })
+  }
+
+  componentWillMount() {
+    this.props.socket.emit('fetch-tasks', { list_id: this.props.list_id })
   }
 
   onInputChange(e) {
@@ -30,16 +42,17 @@ export class List extends React.Component {
   }
 
   render() {
+    var tasks = this.state.tasks || this.props.tasks
     return (
       <div>
         <h4>{ this.props.listname }</h4>
         <input onChange={ this.onInputChange }/>
         <button onClick={ this.onCreateTask }>CREATE TASK</button>
 
-        { this.props.tasks.map((task, index) => 
-          <Task 
+        { tasks.map((task, index) =>
+          <Task
             key={ index }
-            text={ this.text }
+            text={ task.text }
             // assigned={ this.state.assigned }
           />) }
       </div>
@@ -49,8 +62,7 @@ export class List extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    ...state.list,
-    tasks: state.task.tasks
+    ...state.list
   }
 }
 

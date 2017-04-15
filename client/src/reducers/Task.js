@@ -1,7 +1,7 @@
 const initialState = {
   id: 1,
   listname: 'CURRENT SPRINT',
-  board_id: 1,
+  _id: 1,
   tasks: [
     // {
     //   id: 1,
@@ -16,7 +16,7 @@ const initialState = {
     //   assigned: 'Christine'
     // }
   ],
-  fetching: false, 
+  fetching: false,
   createError: null,
   fetchError: null
 }
